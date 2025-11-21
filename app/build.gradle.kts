@@ -82,9 +82,9 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.6.0")
 
     // Room
-    implementation("androidx.room:room-runtime:2.5.1")
-    kapt("androidx.room:room-compiler:2.5.1")
-    implementation("androidx.room:room-ktx:2.5.1")
+    implementation("androidx.room:room-runtime:2.8.4")
+    kapt("androidx.room:room-compiler:2.8.4")
+    implementation("androidx.room:room-ktx:2.8.4")
 
     // OkHTTP
     implementation(platform("com.squareup.okhttp3:okhttp-bom:5.3.0"))
