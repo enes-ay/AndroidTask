@@ -8,9 +8,8 @@ plugins {
 
 android {
     namespace = "com.enesay.android_task"
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk = 36
+
 
     defaultConfig {
         applicationId = "com.enesay.android_task"
@@ -80,7 +79,12 @@ dependencies {
 
     // OkHTTP
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:5.3.0")
 
     // Material
     implementation("androidx.compose.material:material:1.6.8")
+
+    // DataStore
+    implementation("androidx.datastore:datastore-preferences:1.2.0")
+
 }
