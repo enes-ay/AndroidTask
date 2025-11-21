@@ -1,6 +1,12 @@
 package com.enesay.android_task.domain.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "tasks")
 data class TaskItem(
+    @PrimaryKey(autoGenerate = true)
+    val taskId: Int = 0,
     val task: String?,
     val title: String?,
     val description: String?,
