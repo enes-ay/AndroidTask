@@ -97,4 +97,7 @@ dependencies {
     // DataStore
     implementation("androidx.datastore:datastore-preferences:1.2.0")
 
+    // Google code scanner
+    implementation("com.google.android.gms:play-services-code-scanner:16.1.0")
+
 }
