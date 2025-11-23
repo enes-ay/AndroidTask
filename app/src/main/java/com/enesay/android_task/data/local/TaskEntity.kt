@@ -1,12 +1,12 @@
-package com.enesay.android_task.domain.model
+package com.enesay.android_task.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "tasks")
-data class TaskItem(
-    @PrimaryKey(autoGenerate = true)
-    val taskId: Int = 0,
+data class TaskEntity(
+    @PrimaryKey
+    val id: String,
     val task: String?,
     val title: String?,
     val description: String?,
