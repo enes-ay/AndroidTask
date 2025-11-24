@@ -103,4 +103,16 @@ dependencies {
     // Material Icons
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
 
+    // MockK for mocking
+    testImplementation("io.mockk:mockk:1.14.6")
+    testImplementation("io.mockk:mockk-android:1.14.6")
+
+    // Coroutines Test
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
+
+    // Turbine for flow
+    testImplementation("app.cash.turbine:turbine:1.2.1")
+
+    // Google Truth
+    testImplementation("com.google.truth:truth:1.4.5")
 }
