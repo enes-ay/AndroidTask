@@ -1,9 +1,9 @@
 # Screenshots
-<div style="display:flscreenshots/regularSearch.gifex; gap:10px;">
-  <img src="screenshots/QrSearch.gif" width="30%" />
-  <img src="screenshots/regularSearch.gif" width="30%" />
-  <img src=screenshots/swipeTorefresh.gif" width="30%" />
-  <img src=screenshots/taskList.gif" width="30%" />
+<div style="display:flex; gap:10px;">
+  <img src="screenshots/QrSearch.gif" width="25%" />
+  <img src="screenshots/regularSearch.gif" width="25%" />
+  <img src="screenshots/swipeTorefresh.gif" width="25%" />
+  <img src="screenshots/taskList.gif" width="25%" />
 </div>
 Hello dear Android dev prospect!
 
