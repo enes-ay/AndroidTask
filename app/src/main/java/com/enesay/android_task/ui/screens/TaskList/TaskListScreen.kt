@@ -4,7 +4,6 @@ import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -38,11 +37,9 @@ import com.enesay.android_task.ui.components.SearchTopBar
 import com.enesay.android_task.ui.components.TaskRowItem
 import com.enesay.android_task.utils.startQrCodeScanner
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskListScreen(
     viewModel: TaskListViewModel = hiltViewModel(),
-    innerPadding: PaddingValues
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
@@ -70,7 +67,6 @@ fun TaskListScreen(
     TaskListContent(
         state = state,
         onEvent = viewModel::onEvent,
-        paddingValues = innerPadding,
         context = context
     )
 }
@@ -80,7 +76,6 @@ fun TaskListScreen(
 fun TaskListContent(
     state: TaskListUiState,
     onEvent: (TaskListUiEvent) -> Unit,
-    paddingValues: PaddingValues,
     context: Context
 ) {
 
@@ -119,7 +114,6 @@ fun TaskListContent(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
                 .padding(scaffoldPadding)
         ) {
             when (val content = state.contentState) {
