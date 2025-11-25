@@ -7,19 +7,26 @@ import okhttp3.Response
 import javax.inject.Inject
 
 class AuthInterceptor @Inject constructor(
-    private val tokenManager: TokenDatastore
+    private val tokenDatastore: TokenDatastore
 ) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val token = runBlocking {
-            tokenManager.getToken().firstOrNull()
-        }
-        val requestBuilder = chain.request().newBuilder()
-        if (!token.isNullOrEmpty()) {
-            requestBuilder.addHeader("Authorization", "Bearer $token")
+        val originalRequest = chain.request()
+
+        if (originalRequest.header("Authorization") != null) {
+            return chain.proceed(originalRequest)
         }
 
-        val response = chain.proceed(requestBuilder.build())
-        return response
+        val accessToken = runBlocking { tokenDatastore.getToken().firstOrNull() }
+
+        val newRequest = if (!accessToken.isNullOrBlank()) {
+            originalRequest.newBuilder()
+                .addHeader("Authorization", "Bearer $accessToken")
+                .build()
+        } else {
+            originalRequest
+        }
+
+        return chain.proceed(newRequest)
     }
 }
