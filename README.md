@@ -1,3 +1,10 @@
+# Screenshots
+<div style="display:flscreenshots/regularSearch.gifex; gap:10px;">
+  <img src="screenshots/QrSearch.gif" width="30%" />
+  <img src="screenshots/regularSearch.gif" width="30%" />
+  <img src=screenshots/swipeTorefresh.gif" width="30%" />
+  <img src=screenshots/taskList.gif" width="30%" />
+</div>
 Hello dear Android dev prospect!
 
 This repository is supposed to act as a playground for your submission.
