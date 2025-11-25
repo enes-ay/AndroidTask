@@ -115,4 +115,11 @@ dependencies {
 
     // Google Truth
     testImplementation("com.google.truth:truth:1.4.5")
+
+    // WorkManager Kotlin
+    implementation ("androidx.work:work-runtime-ktx:2.11.0")
+
+    // Work Manager with Hilt
+    implementation ("androidx.hilt:hilt-work:1.2.0")
+    kapt ("androidx.hilt:hilt-compiler:1.2.0")
 }
