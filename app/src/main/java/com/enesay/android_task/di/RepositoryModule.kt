@@ -1,6 +1,8 @@
 package com.enesay.android_task.di
 
+import com.enesay.android_task.data.repository.AuthRepositoryImpl
 import com.enesay.android_task.data.repository.TaskRepositoryImpl
+import com.enesay.android_task.domain.repository.AuthRepository
 import com.enesay.android_task.domain.repository.TaskRepository
 import dagger.Binds
 import dagger.Module
@@ -17,4 +19,10 @@ abstract class RepositoryModule {
     abstract fun bindTaskRepository(
         impl: TaskRepositoryImpl
     ): TaskRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindAuthRepository(
+        impl: AuthRepositoryImpl
+    ): AuthRepository
 }
