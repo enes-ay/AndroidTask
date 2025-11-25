@@ -6,7 +6,10 @@ import com.google.android.gms.common.moduleinstall.ModuleInstall
 import com.google.android.gms.common.moduleinstall.ModuleInstallRequest
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
 
-fun startQrCodeScanner(context: Context, onResult: (String) -> Unit) {
+fun startQrCodeScanner(
+    context: Context, onResult: (String) -> Unit,
+    onError: (String) -> Unit
+) {
     val moduleInstallClient = ModuleInstall.getClient(context)
     val scannerClient = GmsBarcodeScanning.getClient(context)
 
@@ -22,11 +25,7 @@ fun startQrCodeScanner(context: Context, onResult: (String) -> Unit) {
                         }
                     }
                     .addOnFailureListener { e ->
-                        Toast.makeText(
-                            context,
-                            "Scanning failed: ${e.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        onError("Scanning failed: ${e.message}")
                     }
             } else {
                 Toast.makeText(
@@ -42,23 +41,18 @@ fun startQrCodeScanner(context: Context, onResult: (String) -> Unit) {
                 moduleInstallClient.installModules(installRequest)
                     .addOnSuccessListener {
                         if (it.areModulesAlreadyInstalled()) {
-                            Toast.makeText(
-                                context,
-                                "Module is installed, Press the QR Button again!",
-                                Toast.LENGTH_LONG
-                            ).show()
+                            onError("Module is installed, Press the QR Button again!")
                         }
                     }
-                    .addOnFailureListener {
-                        Toast.makeText(
-                            context,
-                            "Installing failed!",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                    .addOnFailureListener { e ->
+                        onError(e.localizedMessage ?: "Module installation error")
+                    }
+                    .addOnCompleteListener {
+                        onError("Module is installed, Press the QR Button again!")
                     }
             }
         }
-        .addOnFailureListener {
-            Toast.makeText(context, "Failed to access to Play Services", Toast.LENGTH_SHORT).show()
+        .addOnFailureListener { e ->
+            onError(e.localizedMessage ?: "QR scanning error")
         }
 }
