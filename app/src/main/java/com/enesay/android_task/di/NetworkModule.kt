@@ -3,6 +3,7 @@ package com.enesay.android_task.di
 import com.enesay.android_task.data.remote.ApiService
 import com.enesay.android_task.utils.AuthInterceptor
 import com.enesay.android_task.utils.BASE_URL
+import com.enesay.android_task.utils.TokenAuthenticator
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -27,9 +28,10 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttp(authInterceptor: AuthInterceptor): OkHttpClient =
+    fun provideOkHttp(authInterceptor: AuthInterceptor, tokenAuthenticator: TokenAuthenticator): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
+            .authenticator(tokenAuthenticator)
             .addInterceptor(HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.BASIC) })
             .build()
 
