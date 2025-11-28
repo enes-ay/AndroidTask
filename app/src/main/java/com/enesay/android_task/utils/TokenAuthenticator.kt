@@ -11,7 +11,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 class TokenAuthenticator @Inject constructor(
-    private val tokenDatastore: TokenDatastore, private val apiServiceProvider: Provider<ApiService>
+    private val tokenDatastore: SecureTokenManager, private val apiServiceProvider: Provider<ApiService>
 ) : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? {
@@ -30,17 +30,18 @@ class TokenAuthenticator @Inject constructor(
                     LoginRequest(USERNAME, PASSWORD)
                 )
 
-                val token = loginResponse.oauth?.access_token
+                val token = loginResponse.oauth?.accessToken
                 if (token != null) tokenDatastore.saveToken(token)
                 token
             } catch (e: Exception) {
                 null
             }
         }
+        // Header overriding with new valid token
         return if (newToken != null) {
             response.request.newBuilder().header(
                     "Authorization", "Bearer $newToken"
-                ) // Header overriding with new valid token
+                )
                 .build()
         } else {
             null
