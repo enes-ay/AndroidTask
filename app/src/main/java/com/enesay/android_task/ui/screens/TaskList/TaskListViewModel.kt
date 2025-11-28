@@ -20,8 +20,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -45,7 +47,13 @@ class TaskListViewModel @Inject constructor(
 
     @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
     private val _contentStateFlow: Flow<TaskContentState> = _searchQuery
+        .map {
+            it.trim()
+        }
         .debounce(300)
+        .filter{ query ->
+            query.isBlank() || query.length >= 2
+        }
         .flatMapLatest { query ->
             // Deciding which data flow will be used
             val sourceFlow = if (query.isBlank()) getTasksUseCase() else searchTasksUseCase(query)
