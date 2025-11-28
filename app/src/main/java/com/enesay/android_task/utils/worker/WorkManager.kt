@@ -1,8 +1,7 @@
-package com.enesay.android_task.utils
+package com.enesay.android_task.utils.worker
 
 import android.content.Context
 import androidx.work.*
-import com.enesay.android_task.data.worker.SyncTasksWorker
 import java.util.concurrent.TimeUnit
 
 object WorkManagerScheduler {

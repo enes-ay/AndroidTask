@@ -1,7 +1,8 @@
 package com.enesay.android_task.data.remote
 
-import com.enesay.android_task.domain.model.LoginResponse
-import com.enesay.android_task.domain.model.TaskDTO
+import com.enesay.android_task.data.remote.dto.LoginRequest
+import com.enesay.android_task.data.remote.dto.LoginResponse
+import com.enesay.android_task.data.remote.dto.Task
 import com.enesay.android_task.utils.LOGIN_TOKEN
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -11,7 +12,7 @@ import retrofit2.http.POST
 interface ApiService {
 
     @GET("v1/tasks/select")
-    suspend fun getTasks(): List<TaskDTO>
+    suspend fun getTasks(): List<Task>
 
     @Headers(
         "Authorization: Basic $LOGIN_TOKEN",

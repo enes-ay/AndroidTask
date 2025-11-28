@@ -1,9 +1,9 @@
 package com.enesay.android_task.di
 
 import com.enesay.android_task.data.remote.ApiService
-import com.enesay.android_task.utils.AuthInterceptor
+import com.enesay.android_task.data.remote.interceptors.AuthInterceptor
 import com.enesay.android_task.utils.BASE_URL
-import com.enesay.android_task.utils.TokenAuthenticator
+import com.enesay.android_task.data.remote.interceptors.TokenAuthenticator
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module

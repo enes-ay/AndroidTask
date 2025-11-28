@@ -1,11 +1,11 @@
 package com.enesay.android_task.data.mapper
 
 import com.enesay.android_task.data.local.TaskEntity
-import com.enesay.android_task.domain.model.TaskDTO
+import com.enesay.android_task.data.remote.dto.Task
 import com.enesay.android_task.domain.model.TaskModel
 
 
-fun TaskDTO.toEntity(): TaskEntity {
+fun Task.toEntity(): TaskEntity {
 
     val safeTitle = this.title ?: "unknown"
     val safeTask = this.task ?: ""

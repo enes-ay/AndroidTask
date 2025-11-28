@@ -1,10 +1,10 @@
 package com.enesay.android_task.data.repository
 
-import com.enesay.android_task.data.remote.LoginRequest
+import com.enesay.android_task.data.remote.dto.LoginRequest
 import com.enesay.android_task.data.remote.ApiService
 import com.enesay.android_task.domain.repository.AuthRepository
 import com.enesay.android_task.utils.PASSWORD
-import com.enesay.android_task.utils.SecureTokenManager
+import com.enesay.android_task.utils.helper.SecureTokenManager
 import com.enesay.android_task.utils.USERNAME
 import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject

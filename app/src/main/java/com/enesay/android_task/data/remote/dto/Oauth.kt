@@ -1,4 +1,4 @@
-package com.enesay.android_task.domain.model
+package com.enesay.android_task.data.remote.dto
 
 import com.google.gson.annotations.SerializedName
 

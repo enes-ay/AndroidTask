@@ -1,4 +1,4 @@
-package com.enesay.android_task.utils
+package com.enesay.android_task.utils.helper
 
 import android.content.Context
 import android.widget.Toast

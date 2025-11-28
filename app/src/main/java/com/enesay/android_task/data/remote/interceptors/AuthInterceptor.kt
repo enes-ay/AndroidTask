@@ -1,5 +1,6 @@
-package com.enesay.android_task.utils
+package com.enesay.android_task.data.remote.interceptors
 
+import com.enesay.android_task.utils.helper.SecureTokenManager
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor

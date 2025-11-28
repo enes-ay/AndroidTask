@@ -1,4 +1,4 @@
-package com.enesay.android_task.data.remote
+package com.enesay.android_task.data.remote.dto
 
 import com.enesay.android_task.utils.PASSWORD
 import com.enesay.android_task.utils.USERNAME

@@ -3,7 +3,7 @@ package com.enesay.android_task
 import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
-import com.enesay.android_task.utils.WorkManagerScheduler
+import com.enesay.android_task.utils.worker.WorkManagerScheduler
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 

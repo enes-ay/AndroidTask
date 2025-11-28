@@ -1,4 +1,4 @@
-package com.enesay.android_task.data.worker
+package com.enesay.android_task.utils.worker
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker

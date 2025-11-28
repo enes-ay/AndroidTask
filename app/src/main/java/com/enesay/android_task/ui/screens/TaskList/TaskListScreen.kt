@@ -35,7 +35,7 @@ import com.enesay.android_task.domain.model.TaskModel
 import com.enesay.android_task.ui.components.DefaultTopBar
 import com.enesay.android_task.ui.components.SearchTopBar
 import com.enesay.android_task.ui.components.TaskRowItem
-import com.enesay.android_task.utils.startQrCodeScanner
+import com.enesay.android_task.utils.helper.startQrCodeScanner
 
 @Composable
 fun TaskListScreen(
