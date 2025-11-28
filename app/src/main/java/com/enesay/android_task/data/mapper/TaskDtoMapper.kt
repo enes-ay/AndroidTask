@@ -1,7 +1,7 @@
 package com.enesay.android_task.data.mapper
 
 import com.enesay.android_task.data.local.TaskEntity
-import com.enesay.android_task.data.remote.TaskDTO
+import com.enesay.android_task.domain.model.TaskDTO
 import com.enesay.android_task.domain.model.TaskModel
 
 

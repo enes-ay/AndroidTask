@@ -1,9 +1,16 @@
 package com.enesay.android_task.domain.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Oauth(
-    val access_token: String?,
-    val expires_in: Int?,
-    val refresh_token: String?,
+    @SerializedName("access_token")
+    val accessToken: String?,
+    @SerializedName("expires_in")
+    val expiresIn: Int?,
+    @SerializedName("refresh_token")
+    val refreshToken: String?,
+    @SerializedName("scope")
     val scope: Any?,
-    val token_type: String?
+    @SerializedName("token_type")
+    val tokenType: String?
 )

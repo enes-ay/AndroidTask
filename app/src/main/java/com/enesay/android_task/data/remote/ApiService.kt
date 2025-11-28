@@ -1,6 +1,7 @@
 package com.enesay.android_task.data.remote
 
 import com.enesay.android_task.domain.model.LoginResponse
+import com.enesay.android_task.domain.model.TaskDTO
 import com.enesay.android_task.utils.LOGIN_TOKEN
 import retrofit2.http.Body
 import retrofit2.http.GET
