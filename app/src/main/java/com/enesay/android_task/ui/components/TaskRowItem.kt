@@ -25,9 +25,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.enesay.android_task.R
 import com.enesay.android_task.domain.model.TaskModel
 import com.enesay.android_task.utils.helper.toColor
 
@@ -37,7 +39,7 @@ fun TaskRowItem(task: TaskModel) {
     var isOverflowing by remember { mutableStateOf(false) }
     val rotationState by animateFloatAsState(
         targetValue = if (isExpanded) 180f else 0f,
-        label = "arrowRotation"
+        label = stringResource(R.string.txt_arrow_rotation)
     )
 
     Card(
@@ -63,11 +65,11 @@ fun TaskRowItem(task: TaskModel) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Top // Üstten hizalı olsun
+                verticalAlignment = Alignment.Top
             ) {
                 // Task title
                 Text(
-                    text = task.title ?: "Başlıksız",
+                    text = task.title,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.weight(1f)
@@ -77,10 +79,10 @@ fun TaskRowItem(task: TaskModel) {
                 if (isOverflowing) {
                     Icon(
                         imageVector = Icons.Default.KeyboardArrowDown,
-                        contentDescription = "Genişlet",
+                        contentDescription = stringResource(R.string.btn_expand),
                         modifier = Modifier
                             .rotate(rotationState)
-                            .padding(start = 8.dp) // Başlıkla ikon arasına boşluk
+                            .padding(start = 8.dp)
                     )
                 }
             }
@@ -88,13 +90,13 @@ fun TaskRowItem(task: TaskModel) {
             Spacer(modifier = Modifier.height(4.dp))
 
             // Task Name
-            task.task?.let {
+            task.task.let {
                 Text(it, style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.height(4.dp))
             }
 
             // Overflow control for description
-            task.description?.let { description ->
+            task.description.let { description ->
                 Text(
                     text = description,
                     style = MaterialTheme.typography.bodySmall,

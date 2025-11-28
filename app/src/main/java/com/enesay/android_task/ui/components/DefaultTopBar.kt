@@ -12,7 +12,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import com.enesay.android_task.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -23,7 +25,7 @@ fun DefaultTopBar(
     CenterAlignedTopAppBar(
         title = {
             Text(
-                text = "Task Manager",
+                text = stringResource(R.string.app_name),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
@@ -35,13 +37,13 @@ fun DefaultTopBar(
 
                     Icon(
                         imageVector = Icons.Default.Search,
-                        contentDescription = "Search"
+                        contentDescription = stringResource(R.string.search_desc)
                     )
                 }
                 IconButton(onClick = onQrClicked) {
                     Icon(
                         imageVector = Icons.Default.QrCode2,
-                        contentDescription = "Scan qr for search"
+                        contentDescription = stringResource(R.string.qr_scan_desc)
                     )
                 }
             }

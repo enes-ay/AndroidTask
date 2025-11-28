@@ -58,7 +58,6 @@ class TaskListViewModel @Inject constructor(
             // Deciding which data flow will be used
             val sourceFlow = if (query.isBlank()) getTasksUseCase() else searchTasksUseCase(query)
 
-            // 2. Local Flow ile "İlk Yükleme" durumunu birleştir
             combine(sourceFlow, _isFirstLoad) { tasks, isFirstLoad ->
 
                 if (tasks.isNotEmpty()) {

@@ -28,9 +28,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.enesay.android_task.R
 import com.enesay.android_task.domain.model.TaskModel
 import com.enesay.android_task.ui.components.DefaultTopBar
 import com.enesay.android_task.ui.components.SearchTopBar
@@ -138,7 +140,7 @@ fun TaskListContent(
                 // Success
                 is TaskContentState.Success -> {
                     PullToRefreshBox(
-                        isRefreshing = state.isRefreshing, // Loading'i zaten yukarıda yönetiyoruz
+                        isRefreshing = state.isRefreshing,
                         onRefresh = { onEvent(TaskListUiEvent.OnRefresh) },
                         modifier = Modifier.fillMaxSize()
                     ) {
@@ -177,7 +179,7 @@ fun EmptyView(modifier: Modifier = Modifier) {
             tint = MaterialTheme.colorScheme.secondary
         )
         Spacer(modifier = Modifier.height(8.dp))
-        Text("Tasks not found.")
+        Text(stringResource(R.string.no_tasks_found))
     }
 }
 
@@ -194,7 +196,7 @@ fun ErrorView(message: String, onRetry: () -> Unit, modifier: Modifier = Modifie
         Text(text = message, color = MaterialTheme.colorScheme.error)
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = onRetry) {
-            Text("Retry")
+            Text(stringResource(R.string.retry))
         }
     }
 }

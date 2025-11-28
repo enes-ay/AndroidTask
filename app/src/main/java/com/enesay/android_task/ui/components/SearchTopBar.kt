@@ -24,7 +24,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.enesay.android_task.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,7 +51,7 @@ fun SearchTopBar(
                 onValueChange = onTextChange,
                 placeholder = {
                     Text(
-                        text = "Search task...",
+                        text = stringResource(R.string.search_hint),
                         color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.7f)
                     )
                 },
@@ -68,8 +70,8 @@ fun SearchTopBar(
                 trailingIcon = {
                     IconButton(onClick = onQrClicked) {
                         Icon(
-                            imageVector = Icons.Default.QrCode2, // Material Icons'da var
-                            contentDescription = "Scan QR for search"
+                            imageVector = Icons.Default.QrCode2,
+                            contentDescription = stringResource(R.string.qr_scan_desc)
                         )
                     }
                 }
@@ -94,7 +96,7 @@ fun SearchTopBar(
             ) {
                 Icon(
                     imageVector = Icons.Default.Close,
-                    contentDescription = "Close search",
+                    contentDescription = stringResource(R.string.close_search_desc),
                     tint = MaterialTheme.colorScheme.secondary,
                 )
             }
