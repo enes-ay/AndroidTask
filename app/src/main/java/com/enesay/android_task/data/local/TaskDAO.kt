@@ -19,13 +19,24 @@ interface TaskDAO {
     @Query("DELETE FROM tasks")
     suspend fun deleteTasks()
 
-    @Query(
-        """
+    @Query("""
     SELECT * FROM tasks
-    WHERE LOWER(title || ' ' || task || ' ' || description || ' ' || sort)
-    LIKE '%' || LOWER(:query) || '%'
-"""
-    )
+    WHERE LOWER(
+        IFNULL(id, '') || ' ' ||
+        IFNULL(task, '') || ' ' ||
+        IFNULL(title, '') || ' ' ||
+        IFNULL(description, '') || ' ' ||
+        IFNULL(sort, '') || ' ' ||
+        IFNULL(wageType, '') || ' ' ||
+        IFNULL(businessUnitKey, '') || ' ' ||
+        IFNULL(businessUnit, '') || ' ' ||
+        IFNULL(parentTaskID, '') || ' ' ||
+        IFNULL(preplanningBoardQuickSelect, '') || ' ' ||
+        IFNULL(colorCode, '') || ' ' ||
+        IFNULL(workingTime, '') || ' ' ||
+        IFNULL(externalId, '')
+    ) LIKE '%' || LOWER(:query) || '%'
+""")
     fun searchTasks(query: String): Flow<List<TaskEntity>>
 
     @Query("DELETE FROM tasks WHERE id NOT IN (:activeTaskIds)")
