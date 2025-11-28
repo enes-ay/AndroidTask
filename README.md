@@ -7,7 +7,7 @@
 </div>
 
 # Architecture & Data Flow
-The project implements Clean Architecture with MVVM pattern, adhering to the Single Source of Truth (SSOT) principle.
+The project implements Clean Architecture with MVVM pattern, adhering to the Single Source of Truth (SSOT) principle and it also follows Atomic Commit principle as much as possible.
 - Data Layer (The Foundation)
   - Single Source of Truth: The UI always consumes data from the local Room Database. The network only serves to update this local cache.
   - Secure Networking: Retrofit manages API calls. An AuthInterceptor injects the JWT token (secured in EncryptedSharedPreferences) into every request header automatically.
