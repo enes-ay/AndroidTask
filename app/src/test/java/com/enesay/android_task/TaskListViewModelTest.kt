@@ -5,72 +5,114 @@ import com.enesay.android_task.domain.model.TaskModel
 import com.enesay.android_task.domain.usecase.GetTasksUseCase
 import com.enesay.android_task.domain.usecase.RefreshTasksUseCase
 import com.enesay.android_task.domain.usecase.SearchTasksUseCase
+import com.enesay.android_task.ui.screens.TaskList.TaskContentState
+import com.enesay.android_task.ui.screens.TaskList.TaskListEffect
+import com.enesay.android_task.ui.screens.TaskList.TaskListUiEvent
 import com.enesay.android_task.ui.screens.TaskList.TaskListViewModel
-import com.google.common.truth.Truth
 import io.mockk.every
 import io.mockk.mockk
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import io.mockk.*
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.junit.Rule
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class TaskListViewModelTest {
 
-    private lateinit var taskListViewModel: TaskListViewModel
-    private val getTasksUseCase = mockk<GetTasksUseCase>()
-    private val searchTasksUseCase = mockk<SearchTasksUseCase>()
-    private val refreshTasksUseCase = mockk<RefreshTasksUseCase>()
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    private val testDispatcher = UnconfinedTestDispatcher()
+    // Mocks
+    private val getTasksUseCase: GetTasksUseCase = mockk()
+    private val searchTasksUseCase: SearchTasksUseCase = mockk()
+    private val refreshTasksUseCase: RefreshTasksUseCase = mockk()
 
-    @OptIn(ExperimentalCoroutinesApi::class)
+    private lateinit var viewModel: TaskListViewModel
+
+    // Use StandardTestDispatcher to control virtual time
+    private val testDispatcher = StandardTestDispatcher()
+
     @Before
-    fun setup() {
-        // Setting the proper dispatcher
-        Dispatchers.setMain(testDispatcher)
-    }
+    fun setUp() {
+        // Default mock behaviors
+        every { getTasksUseCase() } returns flowOf(emptyList())
+        coEvery { refreshTasksUseCase() } just Runs
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
-    }
-
-    @Test
-    fun `tasks flow emits data when collected`() = runTest {
-        // --- ARRANGE ---
-        val expectedTaskList = listOf(
-            TaskModel("1", "task1", "task1 title", "task1 desc", "#fffff"),
-            TaskModel("2", "task2", "task2 title", "task2 desc", "#ffwsgf")
-        )
-
-        // Mock Behavior
-        every { getTasksUseCase.invoke() } returns flowOf(expectedTaskList)
-
-        taskListViewModel = TaskListViewModel(
+        viewModel = TaskListViewModel(
             getTasksUseCase,
             searchTasksUseCase,
             refreshTasksUseCase,
-            ioDispatcher = testDispatcher
+            testDispatcher
         )
+    }
 
-        // --- ACT & ASSERT ---
-        taskListViewModel.tasks.test {
+    @Test
+    fun `init block triggers initial sync`() = runTest(testDispatcher) {
+        advanceUntilIdle()
+        coVerify(exactly = 1) { refreshTasksUseCase() }
+    }
 
-            val firstData = awaitItem()
-            Truth.assertThat(firstData).isEmpty() // Initial value for state flow is empty list
+    @Test
+    fun `search query updates and respects debounce`() = runTest(testDispatcher) {
+        val mockList = listOf(TaskModel("1", "Task", "Title", "Desc", "#FFFFFF"))
+        every { searchTasksUseCase("gert") } returns flowOf(mockList)
 
-            val receivedData = awaitItem()
-            Truth.assertThat(receivedData).isEqualTo(expectedTaskList)
-
-            cancelAndIgnoreRemainingEvents()
+        // FIX: Use backgroundScope and collect {}
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
+            viewModel.uiState.collect {}
         }
+
+        // Trigger search
+        viewModel.onEvent(TaskListUiEvent.OnSearchQueryChange("gert"))
+
+        // Before 300ms
+        advanceTimeBy(200)
+        verify(exactly = 0) { searchTasksUseCase("gert") }
+
+        // After 300ms
+        advanceTimeBy(101)
+        advanceUntilIdle()
+        verify(exactly = 1) { searchTasksUseCase("gert") }
+
+        val content = viewModel.uiState.value.contentState
+        assertTrue(content is TaskContentState.Success)
+        assertEquals(mockList, (content as TaskContentState.Success).tasks)
+    }
+
+    @Test
+    fun `search query short length is filtered out`() = runTest(testDispatcher) {
+        // FIX: Use backgroundScope
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
+            viewModel.uiState.collect {}
+        }
+
+        viewModel.onEvent(TaskListUiEvent.OnSearchQueryChange("a"))
+        advanceUntilIdle()
+
+        verify(exactly = 0) { searchTasksUseCase(any()) }
+    }
+
+    @Test
+    fun `refresh failure emits toast effect`() = runTest(testDispatcher) {
+        val errorMsg = "Network Error"
+        coEvery { refreshTasksUseCase() } throws RuntimeException(errorMsg)
+
+        viewModel.effect.test {
+            viewModel.onEvent(TaskListUiEvent.OnRefresh)
+            advanceUntilIdle()
+
+            val item = awaitItem()
+            assertTrue(item is TaskListEffect.ShowToast)
+            assertEquals(errorMsg, (item as TaskListEffect.ShowToast).message)
+        }
+
+        assertEquals(false, viewModel.uiState.value.isRefreshing)
     }
 }
