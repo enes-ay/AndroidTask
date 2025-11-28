@@ -29,7 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.enesay.android_task.domain.model.TaskModel
-import com.enesay.android_task.utils.toColor
+import com.enesay.android_task.utils.helper.toColor
 
 @Composable
 fun TaskRowItem(task: TaskModel) {

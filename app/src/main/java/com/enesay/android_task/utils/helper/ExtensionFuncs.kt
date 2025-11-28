@@ -1,4 +1,4 @@
-package com.enesay.android_task.utils
+package com.enesay.android_task.utils.helper
 
 import androidx.compose.ui.graphics.Color
 import androidx.core.graphics.toColorInt
